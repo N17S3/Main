@@ -9,7 +9,7 @@ local CoreGuiService = game:GetService("CoreGui")
 local ContentService = game:GetService("ContentProvider")
 
 local Themes = {
-	Special = {
+	Dark = {
 		MainFrame = Color3.fromRGB(30,30,30),
 		Minimise = Color3.fromRGB(50, 50, 50),
 		MinimiseAccent = Color3.fromRGB(50, 50, 50),
@@ -41,9 +41,6 @@ local Themes = {
 		TextField = Color3.fromRGB(175,175,175),
 		TextFieldAccent = Color3.fromRGB(255,255,255),
 	},
-	Special = {
-		
-	}
 }
 
 local Types = {
