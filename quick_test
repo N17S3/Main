@@ -1,6 +1,6 @@
 --// Menus \\--
-getgenv().LB = true
-getgenv().CONSOLE = true
+getgenv().LB = false
+getgenv().CONSOLE = false
 getgenv().LoadAutoFarm = true
 
 --// Auto Farm Config V.1 \\--
