@@ -338,10 +338,10 @@ else
 							rebirthReq = 20
 						}
 						{
-							name = "Beast"
-							reqvalue = 120000002
-							endrangevalue = 2000000000000000000
-							alignment = "Neutral"
+							name = "Beast",
+							reqvalue = 120000003,
+							endrangevalue = 2000000000000000000,
+							alignment = "Neutral",
 							rebirthReq = 24
 						}
 					}, -- close evil
@@ -567,15 +567,15 @@ else
 						{
 							name = "SSJBUI",
 							reqvalue = 120000001,
-							endrangevalue = 2000000000000000000,
+							endrangevalue = 120000002,
 							alignment = "Good",
 							rebirthReq = 20
 						}
 						{
-							name = "Beast"
-							reqvalue = 120000002
-							endrangevalue = 2000000000000000000
-							alignment = "Neutral"
+							name = "Beast",
+							reqvalue = 120000003,
+							endrangevalue = 2000000000000000000,
+							alignment = "Neutral",
 							rebirthReq = 24
 						}
 					}
