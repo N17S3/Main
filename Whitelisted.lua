@@ -336,14 +336,14 @@ else
 							endrangevalue = 120000002,
 							alignment = "Evil",
 							rebirthReq = 20
-						}
+						},
 						{
 							name = "Beast",
 							reqvalue = 120000003,
 							endrangevalue = 2000000000000000000,
 							alignment = "Neutral",
 							rebirthReq = 24
-						}
+						},
 					}, -- close evil
 					Good = {
 						{
@@ -570,14 +570,14 @@ else
 							endrangevalue = 120000002,
 							alignment = "Good",
 							rebirthReq = 20
-						}
+						},
 						{
 							name = "Beast",
 							reqvalue = 120000003,
 							endrangevalue = 2000000000000000000,
 							alignment = "Neutral",
 							rebirthReq = 24
-						}
+						},
 					}
 				}
 				local quests = {
