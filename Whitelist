@@ -1,0 +1,4 @@
+return {
+    userIds = {123456789, 987654321, 112233445},
+    hwIds = {"abcd-efgh-ijkl-mnop", "qrst-uvwx-yzab-cdef"}
+}
