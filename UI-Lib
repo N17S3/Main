@@ -1911,7 +1911,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 
 			Color.Name = "Color"
 			Color.Parent = Title
-			Color.BackgroundColor3 = Color3.fromRGB(255, 0, 4)
+			Color.BackgroundColor3 = Color3.fromRGB(3, 158, 255)
 			Color.Position = UDim2.new(0, -23, 0, 46)
 			Color.Size = UDim2.new(0, 246, 0, 80)
 			Color.ZIndex = 10
