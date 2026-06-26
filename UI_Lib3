@@ -1,4 +1,4 @@
-print("#2")
+print("#3")
 
 local TweenService = game:GetService("TweenService")
 local function ripple(obj)
@@ -41,9 +41,9 @@ local function ripple(obj)
 	)
 end
 
+-- FIXED DRAGGABLE FUNCTION FOR MOBILE (TOUCH COMPATIBLE)
 local function draggable(obj)
 	local UserInputService = game:GetService("UserInputService")
-
 	local gui = obj
 
 	local dragging
@@ -53,48 +53,38 @@ local function draggable(obj)
 
 	local function update(input)
 		local delta = input.Position - dragStart
-		local EndPos =
-			UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
-		local Tween = TweenService:Create(gui, TweenInfo.new(0.2), {Position = EndPos})
+		local EndPos = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+		local Tween = TweenService:Create(gui, TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Position = EndPos})
 		Tween:Play()
 	end
 
-	gui.InputBegan:Connect(
-		function(input)
-			if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-				dragging = true
-				dragStart = input.Position
-				startPos = gui.Position
+	gui.InputBegan:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+			dragging = true
+			dragStart = input.Position
+			startPos = gui.Position
 
-				input.Changed:Connect(
-					function()
-						if input.UserInputState == Enum.UserInputState.End then
-							dragging = false
-						end
-					end
-				)
-			end
+			local connection
+			connection = input.Changed:Connect(function()
+				if input.UserInputState == Enum.UserInputState.End then
+					dragging = false
+					connection:Disconnect()
+				end
+			end)
 		end
-	)
+	end)
 
-	gui.InputChanged:Connect(
-		function(input)
-			if
-				input.UserInputType == Enum.UserInputType.MouseMovement or
-				input.UserInputType == Enum.UserInputType.Touch
-			then
-				dragInput = input
-			end
+	gui.InputChanged:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+			dragInput = input
 		end
-	)
+	end)
 
-	UserInputService.InputChanged:Connect(
-		function(input)
-			if input == dragInput and dragging then
-				update(input)
-			end
+	UserInputService.InputChanged:Connect(function(input)
+		if input == dragInput and dragging then
+			update(input)
 		end
-	)
+	end)
 end
 
 local lib = {}
@@ -117,6 +107,7 @@ function lib:Window(text)
 	VenLib.Name = "VenLib"
 	VenLib.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 	VenLib.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+	VenLib.ResetOnSpawn = false -- Crucial: Prevents UI from resetting/vanishing when resetting
 
 	mainframe.Name = "mainframe"
 	mainframe.Parent = VenLib
@@ -420,6 +411,7 @@ function lib:Window(text)
 			)
 		end
 
+		-- FIXED SLIDER FUNCTION (ADDED TOUCH INPUT INTERACTION)
 		function tab:Slider(text, min, max, start, callback)
 			local inputService = game:GetService("UserInputService")
 			local slider = Instance.new("Frame")
@@ -479,43 +471,31 @@ function lib:Window(text)
 			container.CanvasSize = UDim2.new(0, 0, 0, containerlist.AbsoluteContentSize.Y + 10)
 
 			local function slide(input)
-				local pos =
-					UDim2.new(
-						math.clamp((input.Position.X - placetoslide.AbsolutePosition.X) / placetoslide.AbsoluteSize.X, 0, 1),
-						0,
-						1,
-						0
-					)
+				local pos = UDim2.new(math.clamp((input.Position.X - placetoslide.AbsolutePosition.X) / placetoslide.AbsoluteSize.X, 0, 1), 0, 1, 0)
 				slideframe:TweenSize(pos, Enum.EasingDirection.Out, Enum.EasingStyle.Quad, 0.2, true)
 				local s = math.floor(((pos.X.Scale * max) / max) * (max - min) + min)
 				value.Text = tostring(s)
 				callback(s)
 			end
 
-			placetoslide.InputBegan:Connect(
-				function(input)
-					if input.UserInputType == Enum.UserInputType.MouseButton1 then
-						slide(input)
-						dragging = true
-					end
+			placetoslide.InputBegan:Connect(function(input)
+				if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+					slide(input)
+					dragging = true
 				end
-			)
+			end)
 
-			placetoslide.InputEnded:Connect(
-				function(input)
-					if input.UserInputType == Enum.UserInputType.MouseButton1 then
-						dragging = false
-					end
+			placetoslide.InputEnded:Connect(function(input)
+				if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+					dragging = false
 				end
-			)
+			end)
 
-			inputService.InputChanged:Connect(
-				function(input)
-					if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
-						slide(input)
-					end
+			inputService.InputChanged:Connect(function(input)
+				if dragging and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
+					slide(input)
 				end
-			)
+			end)
 		end
 
 		function tab:Dropdown(text, list, callback)
