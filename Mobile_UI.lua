@@ -1,4 +1,4 @@
-print("#3")
+--// Mobile UI \\--
 
 local TweenService = game:GetService("TweenService")
 local function ripple(obj)
